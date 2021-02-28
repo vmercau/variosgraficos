@@ -1,0 +1,79 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+"""
+df = pd.read_csv("tp3.csv",sep=r'\s*,\s*',header=0, engine='python')
+
+Y = df['Tiempo promedio'].tolist()
+
+upperlimits = [True, False] * 5
+lowerlimits = [False, True] * 5
+#
+# Number of years represented as Numpy Array
+#
+X = df['RC(FΩ)'].tolist()
+
+fig, ax = plt.subplots(1,2, figsize=(9, 7), sharex=True, sharey=True)
+
+# Chris Gayle
+yerr=df['error t'].tolist()
+
+
+
+z, residuals, rank, singular_values, rcond = np.polyfit(X, Y, 1, full=True)
+
+print("residuals serie")
+print(residuals)
+print("media serie")
+print(z.mean())
+
+
+p = np.poly1d(z)
+ax[0].plot(X,p(X),"r--",color='red')
+ax[0].errorbar(X, Y,yerr=yerr)
+ax[0].set_title('Resistores A y B en Serie', fontsize=14)
+
+
+
+
+df = pd.read_csv("tp3.csv",sep=r'\s*,\s*',header=0, engine='python')
+
+Y = df['Tiempo promedio'].tolist()
+X = df['RC(FΩ)'].tolist()
+z, residuals, rank, singular_values, rcond = np.polyfit(X, Y, 1, full=True)
+print("residuals paralelo")
+print(residuals)
+print("media paralelo")
+print(z.mean())
+p = np.poly1d(z)
+ax[1].plot(X,p(X),"r--",color='red')
+ax[1].errorbar(X, Y,yerr=yerr)
+ax[1].set_title('Resistores A y B en Paralelo', fontsize=14)
+
+#
+# Draw the plot
+#
+fig.text(0.5, 0.04, 'Corriente (A)', ha='center', fontsize=18)
+fig.text(0.04, 0.5, 'Voltaje (V)', va='center', rotation='vertical', fontsize=18)
+plt.show()"""
+
+
+df = pd.read_csv("tp3.csv",sep=r'\s*,\s*',header=0, engine='python')
+Y = df['Tiempo promedio'].tolist()
+X = df['RC(FΩ)'].tolist()
+yerr=df['error t'].tolist()
+xerr=df['error RC'].tolist()
+
+
+print(xerr)
+z, residuals, rank, singular_values, rcond = np.polyfit(X, Y, 1, full=True)
+print("residuals RC")
+print(residuals)
+p = np.poly1d(z)
+plt.plot(X,p(X),"r--",color='red')
+plt.errorbar(X, Y,xerr=xerr,yerr=yerr)
+#plt.set_title('Resistores A y B en Serie', fontsize=14)
+plt.xlabel('RC (FΩ = s)',fontsize=18)
+plt.ylabel('Tiempo promedio (s)',fontsize=18)
+plt.title('Tiempo característico', fontsize=20)
+plt.show()
